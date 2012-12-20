@@ -58,6 +58,17 @@ namespace RockPaperWinners.Core.Entities
         public GameResult GameResult { get; set; }
     }
 
+    public class ActiveUser : BaseEntity
+    {
+        [ForeignKey("UserProfile")]
+        public int UserID { get; set; }
+
+        public DateTime LastActionDate { get; set; }
+        public bool IsInGame { get; set; }
+
+        public UserProfile UserProfile { get; set; }
+    }
+
     public enum GameResultOutcome
     {
         Player1Win = 1,

@@ -15,5 +15,6 @@ namespace RockPaperWinners.Core.Entities
         public DbSet<GameResult> GameResults { get; set; }
         public DbSet<GameResultPlayer> GameResultPlayers { get; set; }
         public DbSet<BetBand> BetBands { get; set; }
+        public DbSet<ActiveUser> ActiveUsers { get; set; }
     }
 }
