@@ -36,8 +36,9 @@ namespace RockPaperWinners.Core.Entities
     public class GameResult :  BaseEntity
     {
         public DateTime GameDateTime { get; set; }
-        public decimal TotalBet { get; set; }
-        public GameResultOutcome ResultOutcome { get; set; }
+        public decimal? TotalBet { get; set; }
+        public GameResultOutcome? ResultOutcome { get; set; }
+        public bool IsActive { get; set; }
 
         public ICollection<GameResultPlayer> GameResultPlayers { get; set; }
     }
@@ -51,7 +52,7 @@ namespace RockPaperWinners.Core.Entities
         public int UserID { get; set; }
 
         public decimal BetAmount { get; set; }
-        public string Action { get; set; }
+        public GameAction Action { get; set; }
         public GameResultOutcome ResultOutcome { get; set; }
 
         public UserProfile UserProfile { get; set; }
@@ -74,5 +75,12 @@ namespace RockPaperWinners.Core.Entities
         Player1Win = 1,
         Player2Win,
         Draw
+    }
+
+    public enum GameAction
+    {
+        Rock = 1,
+        Paper,
+        Scissors
     }
 }

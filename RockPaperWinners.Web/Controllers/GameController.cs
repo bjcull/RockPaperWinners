@@ -35,6 +35,24 @@ namespace RockPaperWinners.Web.Controllers
 
                 // Wait for another user to become available
 
+                // Record the current datetimeutc, set variable to be certain time in future (+2 mins)
+
+                // BEGIN TRAN
+
+                // While not timed out, check the game result entities to find any active game results with my id
+
+                // If found, return the active game
+
+                // Else, check the active users table for an available to pair
+
+                // If found, create the game result, add players and return the game
+
+                // END TRAN
+
+                // Else, continue
+
+                // If after 2 minutes, return message
+
                 // Set both users as in a game
             }
 
