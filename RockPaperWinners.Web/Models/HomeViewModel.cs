@@ -11,5 +11,6 @@ namespace RockPaperWinners.Web.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public decimal CurrentFunds { get; set; }
+        public string ImageSource { get; set; }
     }
 }

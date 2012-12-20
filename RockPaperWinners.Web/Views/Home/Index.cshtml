@@ -2,11 +2,13 @@
     ViewBag.Title = "Home Page";
 }
 
+@model RockPaperWinners.Web.Models.HomeViewModel
+
 <div id="game-wrapper">
     <div id="opponent">
-        <img src="http://lorempixel.com/100/100/people/1" alt="" />
+        <img src="@Model.ImageSource" alt="" />
         <div class="details">
-            <h4>Paul Allen</h4>
+            <h4>@Model.Name</h4>
         </div>
     </div>
     <div id="player">
