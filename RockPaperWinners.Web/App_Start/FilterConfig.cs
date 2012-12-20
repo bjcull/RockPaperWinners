@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using RockPaperWinners.Web.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace RockPaperWinners.Web

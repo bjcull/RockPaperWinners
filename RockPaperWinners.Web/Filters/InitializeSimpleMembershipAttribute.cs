@@ -38,7 +38,7 @@ namespace RockPaperWinners.Web.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "ID", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("RockPaperWinnersContext", "UserProfiles", "ID", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

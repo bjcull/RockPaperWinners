@@ -17,6 +17,7 @@ namespace RockPaperWinners.Core.Entities
         [ForeignKey("BetBand")]
         public int BetBandID { get; set; }
 
+        public string UserName { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public decimal Money { get; set; }
@@ -52,8 +53,8 @@ namespace RockPaperWinners.Core.Entities
         public int UserID { get; set; }
 
         public decimal BetAmount { get; set; }
-        public GameAction Action { get; set; }
-        public GameResultOutcome ResultOutcome { get; set; }
+        public GameAction? Action { get; set; }
+        public GameResultOutcome? ResultOutcome { get; set; }
 
         public UserProfile UserProfile { get; set; }
         public GameResult GameResult { get; set; }

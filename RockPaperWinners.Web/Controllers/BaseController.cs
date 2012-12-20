@@ -1,4 +1,4 @@
-﻿using Lunchtizzle.Core.Entities;
+﻿using RockPaperWinners.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 
-namespace Lunchtizzle.Controllers
+namespace RockPaperWinners.Web.Controllers
 {
     public class BaseController : Controller
     {
-        private User _currentUser;
-        protected User CurrentUser
+        private UserProfile _currentUser;
+        protected UserProfile CurrentUser
         {
             get
             {
@@ -22,18 +22,14 @@ namespace Lunchtizzle.Controllers
             }
         }
 
-        private User GetCurrentUser()
+        private UserProfile GetCurrentUser()
         {
             if (!WebSecurity.IsAuthenticated)
                 return null;
 
-            using (var db = new LunchtizzleContext())
+            using (var db = new RockPaperWinnersContext())
             {
-                var user = (from u in db.Users
-                            where u.ID == WebSecurity.CurrentUserId
-                            select u).FirstOrDefault();
-
-                return user;
+                return db.UserProfiles.Find(WebSecurity.CurrentUserId);
             }
         }
     }
