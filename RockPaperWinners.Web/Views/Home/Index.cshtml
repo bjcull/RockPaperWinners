@@ -1,5 +1,29 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<h2>Get Ready</h2>
-<p>GO!</p>
+
+<div id="game-wrapper">
+    <div id="opponent">
+        <img src="http://lorempixel.com/100/100/people/1" alt="" />
+        <div class="details">
+            <h4>Paul Allen</h4>
+        </div>
+    </div>
+    <div id="player">
+        <img src="http://lorempixel.com/100/100/people/3" alt="" />
+        <div class="details">
+            <h4>Ben Cull</h4>
+        </div>
+    </div>
+</div>
+
+@section underbody
+{
+    <div class="row">
+        <div class="span4">
+            <div class="hanger">
+                <h3>Current Funds: $13.45</h3>
+            </div>
+        </div>
+    </div>
+}

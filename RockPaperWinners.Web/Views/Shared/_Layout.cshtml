@@ -21,8 +21,17 @@
             <div id="body">
                 <div class="container">
                     <div class="row">
-                        <div id="content" class="span12">                            
-                            @RenderBody()
+                        <div class="span12">      
+                            <div id="content">
+                                @RenderBody()
+                            </div>                  
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span12">
+                            <div id="underbody">
+                                @RenderSection("underbody")
+                            </div>
                         </div>
                     </div>
                 </div>
