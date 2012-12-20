@@ -1,21 +1,26 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿@model RockPaperWinners.Web.Models.HomeViewModel
 
-@model RockPaperWinners.Web.Models.HomeViewModel
+@{
+    ViewBag.Title = "Curently Playing";
+}
 
 <div id="game-wrapper">
     <div id="opponent">
-        <img src="@Model.ImageSource" alt="" />
+        <img alt="" />
         <div class="details">
-            <h4>@Model.Name</h4>
+            <h4>Waiting For Opponent...</h4>
         </div>
     </div>
     <div id="player">
         <img src="http://lorempixel.com/100/100/people/3" alt="" />
         <div class="details">
-            <h4>Ben Cull</h4>
+            @*<h4>@Model.Name</h4>*@
         </div>
+    </div>
+    <div id="controls">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
     </div>
 </div>
 
