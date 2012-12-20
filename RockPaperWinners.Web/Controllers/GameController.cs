@@ -51,7 +51,7 @@ namespace RockPaperWinners.Web.Controllers
                 using (var context = new RockPaperWinnersContext())
                 {
                     // Set the current user as available
-                    if (!context.ActiveUsers.Where(a => a.ID == WebSecurity.CurrentUserId).Any())
+                    if (!context.ActiveUsers.Where(a => a.UserID == WebSecurity.CurrentUserId).Any())
                     {
                         context.ActiveUsers.Add(new ActiveUser { IsInGame = false, LastActionDate = DateTime.UtcNow, UserID = WebSecurity.CurrentUserId });
                         context.SaveChanges();
