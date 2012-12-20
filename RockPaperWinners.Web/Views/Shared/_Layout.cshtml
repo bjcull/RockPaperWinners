@@ -5,44 +5,44 @@
         <title>@ViewBag.Title - My ASP.NET MVC Application</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
+        @Styles.Render("~/bundles/css/site")
     </head>
     <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+        <div id="wrapper">
+            <header>
+                <div class="container">
+                    <div class="row">
+                        <div class="span12">
+                            <h1>Rock, Paper, Winners!</h1>
+                        </div>
+                    </div>
                 </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
+            </header>
+            <div id="body">
+                <div class="container">
+                    <div class="row">
+                        <div id="content" class="span12">                            
+                            @RenderBody()
+                        </div>
+                    </div>
                 </div>
             </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
         </div>
         <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <p>
+                            &copy; @DateTime.Now.Year - Those Guys We Are
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>
 
-        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/js/jquery")
+        @Scripts.Render("~/bundles/js/jqueryval")
+        @Scripts.Render("~/bundles/js/bootstrap")
         @RenderSection("scripts", required: false)
     </body>
 </html>
