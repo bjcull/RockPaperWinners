@@ -20,12 +20,6 @@ namespace RockPaperWinners.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            using (var db = new RockPaperWinnersContext())
-            {
-                db.GameResults.Add(new GameResult { GameDateTime = DateTime.UtcNow, IsActive = true });
-                db.SaveChanges();
-            }
-
             return View();
         }
 
@@ -69,16 +63,11 @@ namespace RockPaperWinners.Web.Controllers
                         var me = context.UserProfiles.Find(WebSecurity.CurrentUserId);
 
                         // Look to see if there are any active games for the current user
-                        var activeGame = (from g in context.GameResults
-                                          join gp in context.GameResultPlayers
-                                          on g.ID equals gp.GameResultID
-                                          where g.IsActive && gp.UserID == me.ID
-                                          select g).FirstOrDefault();
+                        var activeGame = (from gp in context.GameResultPlayers where gp.GameResult.IsActive && gp.UserID == me.ID select gp).FirstOrDefault();
 
                         if (activeGame != null)
                         {
-
-                            var game = context.GameResults.Include("GameResultPlayers").Where(g => g.ID == activeGame.ID).FirstOrDefault();
+                            var game = context.GameResults.Include("GameResultPlayers").Where(g => g.ID == activeGame.GameResultID).FirstOrDefault();
 
                             // Find the opponent
                             var opponent = game.GameResultPlayers.Where(gp => gp.UserID != me.ID).FirstOrDefault();
