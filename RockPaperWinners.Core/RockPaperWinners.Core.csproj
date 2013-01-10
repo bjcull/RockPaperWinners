@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Entities\Model.cs" />
     <Compile Include="Entities\RockPaperWinnersContext.cs" />
+    <Compile Include="Initializers\RockPaperWinnersDbInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

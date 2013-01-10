@@ -79,7 +79,10 @@ namespace RockPaperWinners.Web.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Money = 0.00m, BetBandID = 1, FullName = model.UserName });
+                    // We use the email address as our unique identifier (Username field)
+                    model.UserName = model.Email;
+
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Money = 0.00m, BetBandID = 1, FullName = model.FullName, Email = model.Email });
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }

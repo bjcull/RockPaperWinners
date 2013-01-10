@@ -3,35 +3,42 @@
     ViewBag.Title = "Register";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
-
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
 
     <fieldset>
         <legend>Sign Up</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
+        <div class="control-group">
+                @Html.LabelFor(m => m.FullName)
+            <div class="controls">
+                @Html.TextBoxFor(m => m.FullName)
+                @Html.ValidationMessageFor(m => m.FullName, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+                @Html.LabelFor(m => m.Email)
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
                 @Html.LabelFor(m => m.Password)
+            <div class="controls">
                 @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
+                @Html.ValidationMessageFor(m => m.Password, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
                 @Html.LabelFor(m => m.ConfirmPassword)
+            <div class="controls">
                 @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="form-actions">
+            @Html.ValidationSummary(true)
+            <input type="submit" class="btn btn-primary btn-large" value="Sign Up" />
+        </div>
     </fieldset>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

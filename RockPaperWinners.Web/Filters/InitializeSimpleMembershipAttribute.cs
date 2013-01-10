@@ -5,6 +5,8 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using RockPaperWinners.Web.Models;
+using RockPaperWinners.Core.Entities;
+using RockPaperWinners.Core.Initializers;
 
 namespace RockPaperWinners.Web.Filters
 {
@@ -25,17 +27,13 @@ namespace RockPaperWinners.Web.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer(new RockPaperWinnersDbInitializer());
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new RockPaperWinnersContext())
                     {
-                        if (!context.Database.Exists())
-                        {
-                            // Create the SimpleMembership database without Entity Framework migration schema
-                            ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
-                        }
+                        context.Database.Initialize(false);
                     }
 
                     WebSecurity.InitializeDatabaseConnection("RockPaperWinnersContext", "UserProfiles", "ID", "UserName", autoCreateTables: true);

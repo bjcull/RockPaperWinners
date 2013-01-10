@@ -17,8 +17,9 @@ namespace RockPaperWinners.Web
                         "~/public/js/lib/jquery.unobtrusive*",
                         "~/public/js/lib/jquery.validate*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap").Include(
-                "~/public/js/lib/bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap")
+                .Include("~/public/js/lib/bootstrap.js")
+                .Include("~/public/js/lib/bootstrap-mvc.js"));
 
             var css = new Bundle("~/bundles/css/site");
             css.Include("~/public/css/bootstrap.css")
