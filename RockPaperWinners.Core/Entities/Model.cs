@@ -38,7 +38,7 @@ namespace RockPaperWinners.Core.Entities
     {
         public DateTime GameDateTime { get; set; }
         public decimal? TotalBet { get; set; }
-        public GameResultOutcome? ResultOutcome { get; set; }
+        public int? ResultOutcome { get; set; }
         public bool IsActive { get; set; }
 
         public ICollection<GameResultPlayer> GameResultPlayers { get; set; }
@@ -54,7 +54,7 @@ namespace RockPaperWinners.Core.Entities
 
         public decimal BetAmount { get; set; }
         public GameAction? Action { get; set; }
-        public GameResultOutcome? ResultOutcome { get; set; }
+        public GamePlayerResultOutcome? ResultOutcome { get; set; }
 
         public UserProfile UserProfile { get; set; }
         public GameResult GameResult { get; set; }
@@ -71,16 +71,16 @@ namespace RockPaperWinners.Core.Entities
         public UserProfile UserProfile { get; set; }
     }
 
-    public enum GameResultOutcome
+    public enum GamePlayerResultOutcome
     {
-        Player1Win = 1,
-        Player2Win,
+        IWin = 1,
+        OpponentWin,
         Draw
     }
 
     public enum GameAction
     {
-        Rock = 1,
+        Rock = 0,
         Paper,
         Scissors
     }

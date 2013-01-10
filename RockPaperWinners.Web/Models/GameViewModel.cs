@@ -21,5 +21,6 @@ namespace RockPaperWinners.Web.Models
         public int OpponentID { get; set; }
         public string OpponentName { get; set; }
         public decimal OpponentBetAmount { get; set; }
+        public string OpponentImageSource { get; set; }
     }
 }
