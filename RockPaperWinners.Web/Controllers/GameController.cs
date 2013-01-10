@@ -40,7 +40,7 @@ namespace RockPaperWinners.Web.Controllers
                 }
 
                 // Record the current datetimeutc, set variable to be a time when we will give up trying to find someone
-                DateTime waitUntilTime = DateTime.UtcNow.AddSeconds(10));
+                DateTime waitUntilTime = DateTime.UtcNow.AddSeconds(10);
 
                 // BEGIN TRAN
 
@@ -58,7 +58,8 @@ namespace RockPaperWinners.Web.Controllers
                         var game = context.GameResults.Include("GameResultPlayers").Where(g => g.ID == activeGame.GameResultID).FirstOrDefault();
 
                         // Find the opponent
-                        var opponent = game.GameResultPlayers.Where(gp => gp.UserID != me.ID).FirstOrDefault();
+                        var opponentGame = game.GameResultPlayers.Where(gp => gp.UserID != me.ID).FirstOrDefault();
+                        var opponent = context.UserProfiles.Find(opponentGame.UserID);
                         var myGame = game.GameResultPlayers.Where(gp => gp.UserID == me.ID).FirstOrDefault();
 
                         // Build the model
@@ -67,12 +68,13 @@ namespace RockPaperWinners.Web.Controllers
                         {
                             GameResultID = activeGame.ID,
                             MyUserID = me.ID,
-                            OpponentID = opponent.UserID,
+                            OpponentID = opponentGame.UserID,
                             MyBetAmount = myGame.BetAmount,
-                            OpponentBetAmount = opponent.BetAmount,
+                            OpponentBetAmount = opponentGame.BetAmount,
                             MyName = me.FullName,
-                            OpponentName = context.UserProfiles.Find(opponent.UserID).FullName,
-                            TotalMoney = me.Money
+                            OpponentName = context.UserProfiles.Find(opponentGame.UserID).FullName,
+                            TotalMoney = me.Money,
+                            OpponentImageSource = GravatarHelper.GravatarHelper.CreateGravatarUrl(opponent.Email, 128, "identicon", null, null, null)
                         };
 
                         // Set the current user to be in a game
@@ -125,7 +127,7 @@ namespace RockPaperWinners.Web.Controllers
                                 OpponentID = opponent.ID,
                                 OpponentName = opponent.FullName,
                                 TotalMoney = me.Money,
-                                OpponentImageSource = GravatarHelper.GravatarHelper.CreateGravatarUrl(opponent.Email, 128, "Default", null, null, null)
+                                OpponentImageSource = GravatarHelper.GravatarHelper.CreateGravatarUrl(opponent.Email, 128, "identicon", null, null, null)
                             };
 
                             // Set both the current player and opponent to be in a game
@@ -238,4 +240,4 @@ namespace RockPaperWinners.Web.Controllers
 
     }
 }
->>>>>>> Image source and start of submit action
+
