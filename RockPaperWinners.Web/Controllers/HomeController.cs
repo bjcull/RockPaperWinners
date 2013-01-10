@@ -19,12 +19,12 @@ namespace RockPaperWinners.Web.Controllers
 
             using (var context = new RockPaperWinnersContext())
             {
-                //var user = context.UserProfiles.Find(WebSecurity.CurrentUserId);
+                var user = context.UserProfiles.Find(WebSecurity.CurrentUserId);
 
-                //model.CurrentFunds = user.Money;
-                //model.Email = user.Email;
-                //model.Name = user.FullName;
-                //model.ImageSource = GravatarHelper.GravatarHelper.CreateGravatarUrl(user.Email, 128, "Default",null, null, null);
+                model.CurrentFunds = user.Money;
+                model.Email = user.Email;
+                model.Name = user.FullName;
+                model.ImageSource = GravatarHelper.GravatarHelper.CreateGravatarUrl(user.Email, 128, "Default", null, null, null);
             }
 
             return View(model);
