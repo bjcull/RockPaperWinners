@@ -199,6 +199,11 @@
     <Content Include="Public\css\site.min.css">
       <DependentUpon>site.less</DependentUpon>
     </Content>
+    <Content Include="Public\img\loader.gif" />
+    <Content Include="Public\img\Paper.png" />
+    <Content Include="Public\img\Rock.png" />
+    <Content Include="Public\img\Scissors.png" />
+    <Content Include="Public\js\Game.js" />
     <Content Include="Public\js\lib\bootstrap-mvc.js" />
     <Content Include="Public\js\lib\bootstrap.js" />
     <Content Include="Public\js\lib\jquery-1.7.1.js" />
@@ -234,7 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Public\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

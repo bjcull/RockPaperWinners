@@ -21,6 +21,9 @@ namespace RockPaperWinners.Web
                 .Include("~/public/js/lib/bootstrap.js")
                 .Include("~/public/js/lib/bootstrap-mvc.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/game")
+            .Include("~/public/js/Game.js"));
+
             var css = new Bundle("~/bundles/css/site");
             css.Include("~/public/css/bootstrap.css")
                 .Include("~/public/css/bootstrap-responsive.css")

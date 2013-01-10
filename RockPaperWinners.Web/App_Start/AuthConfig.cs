@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
 using RockPaperWinners.Web.Models;
+using WebMatrix.WebData;
 
 namespace RockPaperWinners.Web
 {

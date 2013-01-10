@@ -42,6 +42,7 @@ footer p {
   line-height: 50px;
   margin: 0;
   padding: 0;
+  color: #fff;
 }
 #game-wrapper {
   position: relative;
@@ -50,24 +51,72 @@ footer p {
   color: #333;
   overflow: hidden;
 }
-#game-wrapper #player {
+#game-wrapper #player-wrapper {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  border-right: 1px solid #ccc;
+}
+#game-wrapper #player-wrapper #player {
   position: absolute;
   bottom: 0;
   left: 0;
 }
-#game-wrapper #player img {
+#game-wrapper #player-wrapper #player img {
   float: left;
   margin-right: 20px;
   height: 100px;
   width: 100px;
 }
-#game-wrapper #player .details {
+#game-wrapper #player-wrapper #player .details {
   float: left;
+}
+#game-wrapper #player-wrapper #waiting {
+  margin-top: 40px;
+}
+#game-wrapper #player-wrapper #waiting img {
+  display: block;
+  width: 128px;
+  height: 128px;
+  margin: 40px auto;
+}
+#game-wrapper #player-wrapper #controls {
+  display: none;
+  margin: 0px 0 0 100px;
+  width: 350px;
+}
+#game-wrapper #player-wrapper #controls h3 {
+  text-align: center;
+  margin: 0 0 50px 0;
+  padding: 0;
+}
+#game-wrapper #player-wrapper #controls h4 {
+  text-align: center;
+  font-weight: normal;
+  color: #999;
+  margin: 0;
+  padding: 0;
+}
+#game-wrapper #player-wrapper #controls button {
+  margin-right: 20px;
+}
+#game-wrapper #player-wrapper #controls button:last-child {
+  margin-right: 0;
+}
+#game-wrapper #opponent-overlay {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  background-color: #ccc;
 }
 #game-wrapper #opponent {
   position: absolute;
   top: 0;
   right: 0;
+  background-color: Transparent;
 }
 #game-wrapper #opponent img {
   float: right;
@@ -78,10 +127,16 @@ footer p {
 #game-wrapper #opponent .details {
   float: left;
 }
+#game-wrapper .message {
+  text-align: center;
+  font-size: 18px;
+}
 #underbody {
   z-index: 50;
 }
 #underbody .hanger {
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
   background-color: #61bc0f;
   padding: 5px 20px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.75);
@@ -95,6 +150,10 @@ button {
   width: 100px;
   height: 100px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.75);
+  padding: 5px;
+}
+button img {
+  margin-top: 10px;
 }
 /* Sticky Footer */
 html,

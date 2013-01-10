@@ -52,7 +52,7 @@ namespace RockPaperWinners.Web.Controllers
                     }
 
                     // Record the current datetimeutc, set variable to be a time when we will give up trying to find someone
-                    DateTime waitUntilTime = DateTime.UtcNow.AddMinutes(2);
+                    DateTime waitUntilTime = DateTime.UtcNow.AddSeconds(10);
 
                     // BEGIN TRAN
 

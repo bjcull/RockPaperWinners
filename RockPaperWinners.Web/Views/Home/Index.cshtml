@@ -11,18 +11,34 @@
             <h4>Waiting For Opponent...</h4>
         </div>
     </div>
-    <div id="player">
-        <img src="@Model.ImageSource" alt="" />
-        <div class="details">
-            <h4>@Model.Name</h4>
+    <div id="player-wrapper">
+        <div id="player">
+            <img src="@Model.ImageSource" alt="" />
+            <div class="details">
+                <h4>@Model.Name</h4>
+            </div>
+        </div>
+        <div id="waiting">
+            <p class="message">Waiting for an opponent...</p>
+            <img src="@Url.Content("~/public/img/loader.gif")" alt="" />
+        </div>
+        <div id="controls">
+            <h4>Current Bet</h4>
+            <h3>$0.45</h3>
+            <p class="message">Make a selection...</p>
+            <button id="rock">Rock <img src="@Url.Content("~/public/img/rock.png")" alt="" /></button>
+            <button id="paper">Paper <img src="@Url.Content("~/public/img/paper.png")" alt="" /></button>
+            <button id="scissors">Scissors <img src="@Url.Content("~/public/img/scissors.png")" alt="" /></button>
         </div>
     </div>
-    <div id="controls">
-        <button id="rock">Rock</button>
-        <button id="paper">Paper</button>
-        <button id="scissors">Scissors</button>
-    </div>
 </div>
+
+<script id="OpponentTemplate" type="text/html">
+    <img src="" alt="" />
+    <div class="details">
+        <h4>Waiting For Opponent...</h4>
+    </div>
+</script>
 
 @section underbody
 {
@@ -33,4 +49,16 @@
             </div>
         </div>
     </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        var g = null;
+
+        $(function () {
+            g = new Game();
+            g.init();
+        });
+    </script>
 }
