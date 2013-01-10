@@ -10,8 +10,9 @@ namespace RockPaperWinners.Web
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/js/jquery").Include(
-                        "~/public/js/lib/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/jquery")
+                .Include("~/public/js/lib/jquery-{version}.js")
+                .Include("~/public/js/lib/jquery.tmpl.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/jqueryval").Include(
                         "~/public/js/lib/jquery.unobtrusive*",

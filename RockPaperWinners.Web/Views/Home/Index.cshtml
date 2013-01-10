@@ -34,9 +34,11 @@
 </div>
 
 <script id="OpponentTemplate" type="text/html">
-    <img src="" alt="" />
-    <div class="details">
-        <h4>Waiting For Opponent...</h4>
+    <div id="opponent">
+        <img src="${imagesrc}" alt="" />
+        <div class="details">
+            <h4>${name}</h4>
+        </div>
     </div>
 </script>
 
@@ -59,6 +61,7 @@
         $(function () {
             g = new Game();
             g.init();
+            g.findGame();
         });
     </script>
 }

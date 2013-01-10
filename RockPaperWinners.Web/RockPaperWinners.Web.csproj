@@ -207,6 +207,7 @@
     <Content Include="Public\js\lib\bootstrap-mvc.js" />
     <Content Include="Public\js\lib\bootstrap.js" />
     <Content Include="Public\js\lib\jquery-1.7.1.js" />
+    <Content Include="Public\js\lib\jquery.tmpl.js" />
     <Content Include="Public\js\lib\jquery.unobtrusive-ajax.js" />
     <Content Include="Public\js\lib\jquery.validate.js" />
     <Content Include="Public\js\lib\jquery.validate.unobtrusive.js" />
