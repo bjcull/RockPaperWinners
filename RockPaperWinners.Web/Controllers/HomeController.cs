@@ -10,7 +10,7 @@ using GravatarHelper;
 
 namespace RockPaperWinners.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         [Authorize]
         public ActionResult Index()
@@ -24,7 +24,7 @@ namespace RockPaperWinners.Web.Controllers
                 model.CurrentFunds = user.Money;
                 model.Email = user.Email;
                 model.Name = user.FullName;
-                model.ImageSource = GravatarHelper.GravatarHelper.CreateGravatarUrl(user.Email, 128, "Default", null, null, null);
+                model.ImageSource = GravatarHelper.GravatarHelper.CreateGravatarUrl(user.Email, 128, "identicon", null, null, null);
             }
 
             return View(model);

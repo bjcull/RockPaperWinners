@@ -5,9 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebMatrix.WebData;
+using RockPaperWinners.Web.Filters;
 
 namespace RockPaperWinners.Web.Controllers
 {
+    [InitializeSimpleMembership]
     public class BaseController : Controller
     {
         private UserProfile _currentUser;

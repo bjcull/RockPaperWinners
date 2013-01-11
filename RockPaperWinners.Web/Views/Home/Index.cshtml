@@ -19,16 +19,25 @@
             </div>
         </div>
         <div id="waiting">
-            <p class="message">Waiting for an opponent...</p>
+            <p class="message">Waiting for opponent...</p>
             <img src="@Url.Content("~/public/img/loader.gif")" alt="" />
+        </div>
+        <div id="win" class="result">
+            <p class="message">You Win!</p>
+        </div>
+        <div id="lose" class="result">
+            <p class="message">You Lose!</p>
+        </div>
+        <div id="draw" class="result">
+            <p class="message">It's a Draw.</p>
         </div>
         <div id="controls">
             <h4>Current Bet</h4>
             <h3>$0.45</h3>
             <p class="message">Make a selection...</p>
-            <button id="rock">Rock <img src="@Url.Content("~/public/img/rock.png")" alt="" /></button>
-            <button id="paper">Paper <img src="@Url.Content("~/public/img/paper.png")" alt="" /></button>
-            <button id="scissors">Scissors <img src="@Url.Content("~/public/img/scissors.png")" alt="" /></button>
+            <button id="rock" data-action="Rock" class="actionbutton">Rock <img src="@Url.Content("~/public/img/rock.png")" alt="" /></button>
+            <button id="paper" data-action="Paper" class="actionbutton">Paper <img src="@Url.Content("~/public/img/paper.png")" alt="" /></button>
+            <button id="scissors" data-action="Scissors" class="actionbutton">Scissors <img src="@Url.Content("~/public/img/scissors.png")" alt="" /></button>
         </div>
     </div>
 </div>

@@ -131,6 +131,9 @@ footer p {
   text-align: center;
   font-size: 18px;
 }
+#game-wrapper .result {
+  display: none;
+}
 #underbody {
   z-index: 50;
 }

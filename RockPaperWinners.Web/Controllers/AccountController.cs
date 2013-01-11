@@ -14,7 +14,6 @@ using RockPaperWinners.Web.Models;
 namespace RockPaperWinners.Web.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //

@@ -66,7 +66,7 @@ namespace RockPaperWinners.Web.Controllers
                         // TODO: Generate random bet amounts
                         model = new GameViewModel
                         {
-                            GameResultID = activeGame.ID,
+                            GameResultID = game.ID,
                             MyUserID = me.ID,
                             OpponentID = opponentGame.UserID,
                             MyBetAmount = myGame.BetAmount,
@@ -148,8 +148,8 @@ namespace RockPaperWinners.Web.Controllers
                         }
                     }
 
-                    // Nobody found, so try again in 5 seconds
-                    Thread.Sleep(5000);
+                    // Nobody found, so try again in 1 seconds
+                    Thread.Sleep(1000);
                 }
 
 
@@ -165,7 +165,7 @@ namespace RockPaperWinners.Web.Controllers
         }
 
         [HttpGet]
-        public JsonResult SubmitAction(int gameResultID, int playerID, string action)
+        public JsonResult SubmitAction(int gameResultID, int playerID, string gameActionString)
         {
             using (RockPaperWinnersContext context = new RockPaperWinnersContext())
             {
@@ -180,7 +180,7 @@ namespace RockPaperWinners.Web.Controllers
                 }
 
                 // If the action supplied is invalid, just end
-                if (!Enum.TryParse(action, true, out gameAction))
+                if (!Enum.TryParse(gameActionString, true, out gameAction))
                 {
                     return Json("Invalid action supplied", JsonRequestBehavior.AllowGet);
                 }
@@ -189,13 +189,19 @@ namespace RockPaperWinners.Web.Controllers
 
                 context.SaveChanges();
 
-                // Get the opponents action
-                var opponentGameResult = context.GameResultPlayers.Where(g => g.GameResultID == gameResultID && g.UserID != playerID).FirstOrDefault();
 
-                // If the opponent has posted an action
-                if (opponentGameResult != null)
+                // Record the current datetimeutc, set variable to be a time when we will give up trying to find someone
+                DateTime waitUntilTime = DateTime.UtcNow.AddSeconds(10);
+
+                // BEGIN TRAN
+
+                // While not timed out, check the game result entities to find any active game results with my id
+                while (DateTime.UtcNow <= waitUntilTime)
                 {
-                    if (opponentGameResult.Action.HasValue && !opponentGameResult.ResultOutcome.HasValue)
+                    // Get the opponents action
+                    var opponentGameResult = context.GameResultPlayers.Where(g => g.GameResultID == gameResultID && g.UserID != playerID).FirstOrDefault();
+
+                    if (opponentGameResult != null && opponentGameResult.Action.HasValue && !opponentGameResult.ResultOutcome.HasValue)
                     {
                         int winner = (3 + (int)gameResult.Action.Value - (int)opponentGameResult.Action.Value) % 3;
 
@@ -220,21 +226,53 @@ namespace RockPaperWinners.Web.Controllers
                         var game = context.GameResults.Find(gameResultID);
                         game.IsActive = false;
 
+                        var activeUser = context.ActiveUsers.Where(u => u.UserID == playerID).FirstOrDefault();
+                        if (activeUser != null)
+                        {
+                            context.ActiveUsers.Remove(activeUser);
+                        }
+
                         context.SaveChanges();
 
-                        return Json(gameResult, JsonRequestBehavior.AllowGet);
+                        var result = new GameResultModel()
+                        {
+                            GameResult = (int)gameResult.ResultOutcome
+                        };
+
+                        return Json(result, JsonRequestBehavior.AllowGet);
                     }
-                    else
+                    else if (opponentGameResult != null && opponentGameResult.Action.HasValue && opponentGameResult.ResultOutcome.HasValue)
                     {
-                        // Something went wrong, as the game already has an outcome
-                        return Json("Game already has an outcome", JsonRequestBehavior.AllowGet);
+                        var activeUser = context.ActiveUsers.Where(u => u.UserID == playerID).FirstOrDefault();
+                        if (activeUser != null)
+                        {
+                            context.ActiveUsers.Remove(activeUser);
+                        }
+
+                        context.SaveChanges();
+
+                        var result = new GameResultModel()
+                        {
+                            GameResult = (int)gameResult.ResultOutcome
+                        };
+
+                        return Json(result, JsonRequestBehavior.AllowGet);
                     }
+                    else if (opponentGameResult != null && opponentGameResult.Action.HasValue)
+                    {
+                        return Json("Has Opponent Action, but result outcome is screwed.", JsonRequestBehavior.AllowGet);
+                    }
+                    else if (opponentGameResult == null)
+                    {
+                        return Json("opponent game result is null???", JsonRequestBehavior.AllowGet);
+                    }                   
+
+                    // Nobody found, so try again in 1 seconds
+                    Thread.Sleep(1000);
                 }
-                // If the opponent hasn't posted an action, we need to wait
-                else
-                {
-                    return Json("Opponent not posted action", JsonRequestBehavior.AllowGet);
-                }
+
+                // Something went wrong, there's no opponent result
+                return Json("Game Timed Out", JsonRequestBehavior.AllowGet);
             }
         }
 
