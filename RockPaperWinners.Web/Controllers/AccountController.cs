@@ -14,7 +14,7 @@ using RockPaperWinners.Web.Models;
 namespace RockPaperWinners.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         //
         // GET: /Account/Login

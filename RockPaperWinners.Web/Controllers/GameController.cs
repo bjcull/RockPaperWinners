@@ -161,17 +161,19 @@ namespace RockPaperWinners.Web.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
 
-           
+
         }
 
         [HttpGet]
         public JsonResult SubmitAction(int gameResultID, int playerID, string gameActionString)
         {
+            GameResultPlayer gameResult = null;
+
             using (RockPaperWinnersContext context = new RockPaperWinnersContext())
             {
                 GameAction gameAction;
 
-                var gameResult = context.GameResultPlayers.Where(g => g.GameResultID == gameResultID && g.UserID == playerID).FirstOrDefault();
+                gameResult = context.GameResultPlayers.Where(g => g.GameResultID == gameResultID && g.UserID == playerID).FirstOrDefault();
 
                 // If there is already an action, just end
                 if (gameResult.Action.HasValue)
@@ -188,15 +190,17 @@ namespace RockPaperWinners.Web.Controllers
                 gameResult.Action = gameAction;
 
                 context.SaveChanges();
+            }
 
+            // Record the current datetimeutc, set variable to be a time when we will give up trying to find someone
+            DateTime waitUntilTime = DateTime.UtcNow.AddSeconds(60);
 
-                // Record the current datetimeutc, set variable to be a time when we will give up trying to find someone
-                DateTime waitUntilTime = DateTime.UtcNow.AddSeconds(10);
+            // BEGIN TRAN
 
-                // BEGIN TRAN
-
-                // While not timed out, check the game result entities to find any active game results with my id
-                while (DateTime.UtcNow <= waitUntilTime)
+            // While not timed out, check the game result entities to find any active game results with my id
+            while (DateTime.UtcNow <= waitUntilTime)
+            {
+                using (RockPaperWinnersContext context = new RockPaperWinnersContext())
                 {
                     // Get the opponents action
                     var opponentGameResult = context.GameResultPlayers.Where(g => g.GameResultID == gameResultID && g.UserID != playerID).FirstOrDefault();
@@ -265,16 +269,16 @@ namespace RockPaperWinners.Web.Controllers
                     else if (opponentGameResult == null)
                     {
                         return Json("opponent game result is null???", JsonRequestBehavior.AllowGet);
-                    }                   
-
-                    // Nobody found, so try again in 1 seconds
-                    Thread.Sleep(1000);
+                    }
                 }
-
-                // Something went wrong, there's no opponent result
-                return Json("Game Timed Out", JsonRequestBehavior.AllowGet);
+                // Nobody found, so try again in 1 seconds
+                Thread.Sleep(1000);
             }
+
+            // Something went wrong, there's no opponent result
+            return Json("Game Timed Out", JsonRequestBehavior.AllowGet);
         }
+
 
     }
 }
