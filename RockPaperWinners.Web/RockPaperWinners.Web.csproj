@@ -255,6 +255,7 @@
     <None Include="BundleTransformer.Configuration.xsd" />
     <Content Include="Public\css\site.less" />
     <Content Include="Views\Game\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\File.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RockPaperWinners.Core\RockPaperWinners.Core.csproj">
