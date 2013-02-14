@@ -193,7 +193,7 @@ namespace RockPaperWinners.Web.Controllers
             }
 
             // Record the current datetimeutc, set variable to be a time when we will give up trying to find someone
-            DateTime waitUntilTime = DateTime.UtcNow.AddSeconds(60);
+            DateTime waitUntilTime = DateTime.UtcNow.AddSeconds(15);
 
             // BEGIN TRAN
 
@@ -209,16 +209,29 @@ namespace RockPaperWinners.Web.Controllers
                     {
                         int winner = (3 + (int)gameResult.Action.Value - (int)opponentGameResult.Action.Value) % 3;
 
+                        var myProfile = context.UserProfiles.Find(playerID);
+                        var opponentProfile = context.UserProfiles.Where(u => u.ID == opponentGameResult.UserID).FirstOrDefault();
+
                         switch (winner)
                         {
                             case 1:
                                 gameResult.ResultOutcome = GamePlayerResultOutcome.IWin;
                                 opponentGameResult.ResultOutcome = GamePlayerResultOutcome.OpponentWin;
+
+                                myProfile.Money = myProfile.Money + gameResult.BetAmount;
+                                opponentProfile.Money = opponentProfile.Money - opponentGameResult.BetAmount;
+                                context.SaveChanges();
+
                                 break;
 
                             case 2:
                                 gameResult.ResultOutcome = GamePlayerResultOutcome.OpponentWin;
                                 opponentGameResult.ResultOutcome = GamePlayerResultOutcome.IWin;
+
+                                myProfile.Money = myProfile.Money - gameResult.BetAmount;
+                                opponentProfile.Money = opponentProfile.Money + opponentGameResult.BetAmount;
+                                context.SaveChanges();
+
                                 break;
 
                             case 0:
@@ -240,7 +253,8 @@ namespace RockPaperWinners.Web.Controllers
 
                         var result = new GameResultModel()
                         {
-                            GameResult = (int)gameResult.ResultOutcome
+                            GameResult = (int)gameResult.ResultOutcome,
+                            MyFunds = myProfile.Money
                         };
 
                         return Json(result, JsonRequestBehavior.AllowGet);
@@ -257,7 +271,8 @@ namespace RockPaperWinners.Web.Controllers
 
                         var result = new GameResultModel()
                         {
-                            GameResult = (int)gameResult.ResultOutcome
+                            GameResult = (int)gameResult.ResultOutcome,
+                            MyFunds = context.UserProfiles.Find(playerID).Money
                         };
 
                         return Json(result, JsonRequestBehavior.AllowGet);
@@ -275,8 +290,36 @@ namespace RockPaperWinners.Web.Controllers
                 Thread.Sleep(1000);
             }
 
-            // Something went wrong, there's no opponent result
-            return Json("Game Timed Out", JsonRequestBehavior.AllowGet);
+            // The opponent has buggered off, or something went wrong
+            using (RockPaperWinnersContext context = new RockPaperWinnersContext())
+            {
+                var gameResultPlayers = context.GameResultPlayers.Where(g => g.GameResultID == gameResultID).ToList();
+
+                // Set the game result as a draw and remove both players from active users as one has gone and the other needs to find a new opponent
+                foreach (var player in gameResultPlayers)
+                {
+                    player.ResultOutcome = GamePlayerResultOutcome.Draw;
+                    context.SaveChanges();
+
+                    var activeUser = context.ActiveUsers.Where(u => u.UserID == player.UserID).FirstOrDefault();
+                    context.ActiveUsers.Remove(activeUser);
+                    context.SaveChanges();
+                }
+
+                // Mark game as inactive
+                var game = context.GameResults.Find(gameResultID);
+                game.IsActive = false;
+                context.SaveChanges();
+
+                // Return the draw result to the person who submitted the action
+                var result = new GameResultModel()
+                {
+                    GameResult = 3,
+                    MyFunds = context.UserProfiles.Find(playerID).Money
+                };
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
         }
 
 

@@ -8,5 +8,6 @@ namespace RockPaperWinners.Web.Models
     public class GameResultModel
     {
         public int GameResult { get; set; }
+        public decimal MyFunds { get; set; }
     }
 }
