@@ -5,12 +5,7 @@
 }
 
 <div id="game-wrapper">
-    <div id="opponent">
-        <img alt="" />
-        <div class="details">
-            <h4>Waiting For Opponent...</h4>
-        </div>
-    </div>
+    <div id="opponent-wrapper"></div>
     <div id="player-wrapper">
         <div id="player">
             <img src="@Model.ImageSource" alt="" />
@@ -18,18 +13,9 @@
                 <h4>@Model.Name</h4>
             </div>
         </div>
-        <div id="waiting">
+        <div id="waiting" class="player-loader">
             <p class="message">Waiting for opponent...</p>
             <img src="@Url.Content("~/public/img/loader.gif")" alt="" />
-        </div>
-        <div id="win" class="result">
-            <p class="message">You Win!</p>
-        </div>
-        <div id="lose" class="result">
-            <p class="message">You Lose!</p>
-        </div>
-        <div id="draw" class="result">
-            <p class="message">It's a Draw.</p>
         </div>
         <div id="controls">
             <h4>Current Bet</h4>
@@ -40,13 +26,33 @@
             <button id="scissors" data-action="Scissors" class="actionbutton">Scissors <img src="@Url.Content("~/public/img/scissors.png")" alt="" /></button>
         </div>
     </div>
+    <div id="win" class="result">
+        <p class="message">You Win!</p>
+    </div>
+    <div id="lose" class="result">
+        <p class="message">You Lose!</p>
+    </div>
+    <div id="draw" class="result">
+        <p class="message">It's a Draw.</p>
+    </div>
 </div>
 
 <script id="OpponentTemplate" type="text/html">
-    <div id="opponent">
-        <img src="${imagesrc}" alt="" />
-        <div class="details">
-            <h4>${name}</h4>
+    <div id="opponent-wrapper">
+        <div id="opponent">
+            <img src="${imagesrc}" alt="" />
+            <div class="details">
+                <h4>${name}</h4>
+            </div>
+        </div>
+        <div id="thinking" class="player-loader">
+            <p class="message">Waiting for opponent...</p>
+            <img src="@Url.Content("~/public/img/loader.gif")" alt="" />
+        </div>
+        <div class="controls">
+            <button id="Orock" data-action="Rock" class="opponent-action">Rock <img src="@Url.Content("~/public/img/rock.png")" alt="" /></button>
+            <button id="Opaper" data-action="Paper" class="opponent-action">Paper <img src="@Url.Content("~/public/img/paper.png")" alt="" /></button>
+            <button id="Oscissors" data-action="Scissors" class="opponent-action">Scissors <img src="@Url.Content("~/public/img/scissors.png")" alt="" /></button>
         </div>
     </div>
 </script>

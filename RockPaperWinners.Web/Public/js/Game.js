@@ -23,7 +23,12 @@
         $("#waiting").fadeIn("fast");
 
         $.getJSON("/game/findgame", null, function (result) {
-            var test = result;
+
+            if (!result) {
+                findGame();
+                return;
+            }            
+
             var opponent = {
                 name: result.OpponentName,
                 imagesrc: result.OpponentImageSource
@@ -34,7 +39,7 @@
 
             console.log("GameID: " + self.currentGameId + " - PlayerID: " + self.myUserId);
 
-            $("#OpponentTemplate").tmpl(opponent).replaceAll("#opponent");
+            $("#OpponentTemplate").tmpl(opponent).replaceAll("#opponent-wrapper");
             $("#waiting").fadeOut("fast");
             $("#controls").fadeIn("fast");
         });
@@ -47,6 +52,8 @@
             return;
 
         this.actionSelected = true;
+
+        $("#thinking").fadeIn("fast");
 
         $(".actionbutton").not(button).fadeOut("fast", function () {
             $(this).css("visibility", "hidden").css("display", "inline-block");
@@ -63,15 +70,42 @@
 
             console.log(result);
 
-            if (result.GameResult == 1)
+            if (result.GameResult == 1) {
                 $("#win").fadeIn("fast");
-            else if (result.GameResult == 2)
+
+                if (action == "Rock")
+                    $("#Oscissors").fadeIn("fast");
+                else if (action == "Paper")
+                    $("#Orock").fadeIn("fast");
+                else if (action == "Scissors")
+                    $("#Opaper").fadeIn("fast");
+            }
+            else if (result.GameResult == 2) {
                 $("#lose").fadeIn("fast");
-            else
+
+                if (action == "Rock")
+                    $("#Opaper").fadeIn("fast");
+                else if (action == "Paper")
+                    $("#Oscissors").fadeIn("fast");
+                else if (action == "Scissors")
+                    $("#Orock").fadeIn("fast");
+            }
+            else {
                 $("#draw").fadeIn("fast");
+
+                if (action == "Rock")
+                    $("#Orock").fadeIn("fast");
+                else if (action == "Paper")
+                    $("#Opaper").fadeIn("fast");
+                else if (action == "Scissors")
+                    $("#Oscissors").fadeIn("fast");
+            }
+
+            $("#thinking").fadeOut("fast");
 
             setTimeout(function () {
                 $(".result").fadeOut("fast");
+                $("opponent-action").fadeOut("fast");
 
                 self.findGame();
             }, 3000);
