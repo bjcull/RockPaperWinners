@@ -101,6 +101,8 @@
                     $("#Oscissors").fadeIn("fast");
             }
 
+            $("#funds").text(result.MyFunds);
+
             $("#thinking").fadeOut("fast");
 
             setTimeout(function () {
