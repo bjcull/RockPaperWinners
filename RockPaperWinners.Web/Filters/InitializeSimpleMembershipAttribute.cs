@@ -27,7 +27,7 @@ namespace RockPaperWinners.Web.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer(new RockPaperWinnersDbInitializer());
+                //Database.SetInitializer(new RockPaperWinnersDbInitializer());
 
                 try
                 {
